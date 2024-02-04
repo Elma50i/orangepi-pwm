@@ -1,5 +1,6 @@
 // https://learn.microsoft.com/en-us/dotnet/iot/tutorials/lcd-display
 
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.DependencyInjection;
 using OrangePi.Common.Extensions;
 using OrangePi.Common.Services;
@@ -34,8 +35,11 @@ IHost host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IInfoService>(x => new SsdInfoService(
            processRunner: x.GetRequiredService<IProcessRunner>(),
            temperatureReaders: x.GetRequiredService<IEnumerable<ITemperatureReader>>(),
+           logger: x.GetRequiredService<ILogger<SsdInfoService>>(),
+           cache: x.GetRequiredService<IDistributedCache>(),
            driveMount: "/dev/nvme0n1p2",
-           logger: x.GetRequiredService<ILogger<SsdInfoService>>()));
+           cacheDurationSeconds: 30
+           ));
 
         services.AddTransient<IHostInfoService>(x => new HostInfoService(
            processRunner: x.GetRequiredService<IProcessRunner>(),
