@@ -25,6 +25,8 @@ IHost host = Host.CreateDefaultBuilder(args)
         services.Configure<ServiceConfiguration>(hostContext.Configuration.GetSection(nameof(ServiceConfiguration)));
         services.Configure<SwitchConfig>(hostContext.Configuration.GetSection(nameof(SwitchConfig)));
         services.AddHostedService<Worker>();
+        services.AddDistributedMemoryCache();
+
         services.AddSingleton<IProcessRunner, ProcessRunner>();
 
         services.AddCpuTemperatureReader();
