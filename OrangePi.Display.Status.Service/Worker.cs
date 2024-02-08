@@ -109,6 +109,9 @@ namespace OrangePi.Display.Status.Service
                     {
                         ssd1306.SendCommand(new Ssd1306Command(0xc0));//Flip vertically
                         ssd1306.SendCommand(new Ssd1306Command(0xa0));//Flip horizontally
+
+                        ssd1306.SendCommand(new Ssd1306Command(0x81));
+                        ssd1306.SendCommand(new Ssd1306Command(0x40));
                     }
 
                     while (!stoppingToken.IsCancellationRequested)
